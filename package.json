@@ -5,7 +5,7 @@
   "main": "./src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node -r dotenv/config src/index.js",
+    "start": "npm run migrate && node -r dotenv/config src/index.js",
     "migrate": "npx sequelize-cli db:migrate",
     "migrate:undo": "npx sequelize-cli db:migrate:undo"
   },
