@@ -1,6 +1,7 @@
 require("dotenv/config");
 
 const {
+  PORT,
   DEV_DB_DIALECT,
   JWT_AUDIENCE,
   JWT_ISSUER,
@@ -15,6 +16,7 @@ const {
 } = process.env;
 
 module.exports = {
+  appPort: PORT,
   databaseUrl: DATABASE_URL,
   dialect: DEV_DB_DIALECT,
   jwtOptions: {
