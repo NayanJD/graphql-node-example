@@ -37,5 +37,7 @@ const env = process.env.NODE_ENV || "development";
 module.exports = {
   typeDefs,
   resolvers,
-  tracing: env === "development",
+  tracing: true,
+  introspection: true,
+  playground: true,
 };
