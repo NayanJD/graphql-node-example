@@ -2,7 +2,7 @@ require("dotenv/config");
 
 const {
   PORT,
-  DEV_DB_DIALECT,
+  DB_DIALECT,
   JWT_AUDIENCE,
   JWT_ISSUER,
   JWT_ALGORITHM,
@@ -18,7 +18,7 @@ const {
 module.exports = {
   appPort: PORT,
   databaseUrl: DATABASE_URL,
-  dialect: DEV_DB_DIALECT,
+  dialect: DB_DIALECT,
   jwtOptions: {
     audience: JWT_AUDIENCE,
     issuer: JWT_ISSUER,
