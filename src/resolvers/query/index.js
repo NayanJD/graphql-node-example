@@ -1,7 +1,10 @@
+const userQueries = require("./user");
+
+const cuisineQueries = require("./cuisine");
+
 const query = {
-  test: (parent, args, context, info) => {
-    return "Welcome to cuisine catalogue";
-  },
+  ...userQueries,
+  ...cuisineQueries,
 };
 
 module.exports = query;
