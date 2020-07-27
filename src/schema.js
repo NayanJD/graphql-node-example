@@ -4,14 +4,18 @@ const resolvers = require("./resolvers");
 
 const typeDefs = gql`
   type Query {
-    test: String!
+    me: User!
+    cuisines: [Cuisine!]!
   }
+
   type Mutation {
     signup(username: String!, password: String!, name: String!): signUpResponse!
 
     login(username: String!, password: String!): loginResponse!
 
     updateUser(name: String): User!
+
+    createCuisine(name: String!, description: String!): Cuisine!
   }
 
   type User {
@@ -20,6 +24,7 @@ const typeDefs = gql`
     username: String!
     createdAt: String!
     updatedAt: String!
+    cuisines: [Cuisine!]!
   }
 
   type signUpResponse {
@@ -29,6 +34,15 @@ const typeDefs = gql`
   type loginResponse {
     user: User!
     access_token: String!
+  }
+
+  type Cuisine {
+    id: ID!
+    name: String!
+    description: String!
+    created_at: String!
+    updated_at: String!
+    chef: User!
   }
 `;
 
