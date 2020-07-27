@@ -1,4 +1,4 @@
-require("dotenv/config");
+require("dotenv/config"); //To be used by sequelize-cli
 
 const {
   DEV_APP_PORT,

@@ -1,4 +1,8 @@
-const { ApolloError, AuthenticationError } = require("apollo-server");
+const {
+  ApolloError,
+  AuthenticationError,
+  UserInputError,
+} = require("apollo-server");
 
 class UserAlreadyExistsError extends ApolloError {
   constructor() {
@@ -9,6 +13,24 @@ class UserAlreadyExistsError extends ApolloError {
 class UserNotFoundError extends ApolloError {
   constructor() {
     super("User does not exists", "USER_NOT_FOUND");
+  }
+}
+
+class WrongPasswordError extends AuthenticationError {
+  constructor() {
+    super("Wrong password provided.", "USER_NOT_FOUND");
+  }
+}
+
+class InvalidTokenError extends AuthenticationError {
+  constructor() {
+    super("Invalid token provided");
+  }
+}
+
+class InternalError extends ApolloError {
+  constructor() {
+    super("Internal Error Occurred!");
   }
 }
 
@@ -23,6 +45,9 @@ function throwInternalError() {
 module.exports = {
   UserAlreadyExistsError,
   UserNotFoundError,
+  InvalidTokenError,
+  InternalError,
+  WrongPasswordError,
   throwUnauthorisedError,
   throwInternalError,
 };

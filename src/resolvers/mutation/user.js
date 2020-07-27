@@ -1,10 +1,6 @@
 const bcrypt = require("bcryptjs");
 
-const {
-  AuthenticationError,
-  UserInputError,
-  ApolloError,
-} = require("apollo-server");
+const { ApolloError } = require("apollo-server");
 
 const logger = require("../../helpers/logger");
 
@@ -13,8 +9,8 @@ const { getAccessToken } = require("../../helpers/jwt");
 const {
   UserAlreadyExistsError,
   UserNotFoundError,
-  throwUnauthorisedError,
-  throwInternalError,
+  WrongPasswordError,
+  InternalError,
 } = require("../../helpers/errors");
 
 const {
@@ -68,7 +64,7 @@ const mutations = {
         throw error;
       } else {
         //Catches unknown errors
-        throw new ApolloError("Internal server error");
+        throw new InternalError();
       }
     }
 
@@ -94,7 +90,7 @@ const mutations = {
 
     //User not found
     if (dbUser === null) {
-      throw new AuthenticationError("Account does not exists");
+      throw new UserNotFoundError();
     }
 
     //Check if password compares with hashed_password
@@ -113,11 +109,15 @@ const mutations = {
       dbUser.access_token = accessToken;
       dbUser.access_token_created_at = now.toISOString();
 
-      //Save the user's access_token
-      await dbUser.save();
+      try {
+        //Save the user's access_token
+        await dbUser.save();
+      } catch (error) {
+        throw new InternalError();
+      }
     } else {
       //Password does not matches
-      throw new AuthenticationError("Wrong password");
+      throw new WrongPasswordError();
     }
 
     return {
@@ -128,7 +128,7 @@ const mutations = {
 
   updateUser: async (parent, args, context) => {
     if (!context.user) {
-      throwUnauthorisedError();
+      throw new InvalidTokenError();
     }
 
     const { name } = args;
@@ -164,7 +164,7 @@ const mutations = {
       if (error instanceof ApolloError) {
         throw error;
       } else {
-        throwInternalError();
+        throw new InternalError();
       }
     }
 
