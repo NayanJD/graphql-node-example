@@ -1,9 +1,6 @@
 const logger = require("../../helpers/logger");
 
-const {
-  throwInternalError,
-  throwUnauthorisedError,
-} = require("../../helpers/errors");
+const { InvalidTokenError, InternalError } = require("../../helpers/errors");
 
 const { ApolloError } = require("apollo-server");
 
@@ -15,7 +12,7 @@ const mutations = {
   createCuisine: async (parent, args, context) => {
     //Throw error if caller is not authorised
     if (!context.user) {
-      throwUnauthorisedError();
+      throw new InvalidTokenError();
     }
 
     const { name, description } = args;
@@ -40,7 +37,7 @@ const mutations = {
         throw error;
       } else {
         //Catches unknown errors
-        throwInternalError();
+        throw new InternalError();
       }
     }
 

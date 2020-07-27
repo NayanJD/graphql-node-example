@@ -1,6 +1,6 @@
 const logger = require("../helpers/logger");
 
-const { throwInternalError } = require("../helpers/errors");
+const { InternalError } = require("../helpers/errors");
 
 const { ApolloError } = require("apollo-server");
 
@@ -24,7 +24,7 @@ const query = {
           throw error;
         } else {
           //Catches unknown errors
-          throwInternalError();
+          throw new InternalError();
         }
       }
 

@@ -3,8 +3,8 @@ const logger = require("../../helpers/logger");
 const { ApolloError } = require("apollo-server");
 
 const {
-  throwInternalError,
-  throwUnauthorisedError,
+  InvalidTokenError,
+  InternalError,
   UserNotFoundError,
 } = require("../../helpers/errors");
 
@@ -12,7 +12,7 @@ const query = {
   me: async (parent, args, context) => {
     //Throw error if caller is unauthorised
     if (!context.user) {
-      throwUnauthorisedError();
+      throw new InvalidTokenError();
     }
 
     let user;
@@ -32,7 +32,7 @@ const query = {
         throw error;
       } else {
         //Catches unknown errors
-        throwInternalError();
+        throw new InternalError();
       }
     }
 
