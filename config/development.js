@@ -11,6 +11,7 @@ const {
   DEV_JWT_ISSUER,
   DEV_JWT_ALGORITHM,
   DEV_JWT_EXPIRES_IN,
+  DEV_JWT_SECRET_KEY,
   DEV_AWS_SES_SENDER,
   DEV_APP_DOMAIN,
   DEV_ERR_LOG_FILE,
@@ -26,6 +27,7 @@ module.exports = {
   host: DEV_DB_HOST,
   dialect: DEV_DB_DIALECT,
   jwtOptions: {
+    secretKey: DEV_JWT_SECRET_KEY,
     audience: DEV_JWT_AUDIENCE,
     issuer: DEV_JWT_ISSUER,
     algorithm: DEV_JWT_ALGORITHM,

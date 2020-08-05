@@ -13,7 +13,13 @@ const createJWT = promisify(jsonwebtoken.sign);
 
 const filename = "/helpers/jwt.js:";
 
-const { audience, issuer, algorithm, expiresIn } = configuration.jwtOptions;
+const {
+  audience,
+  issuer,
+  algorithm,
+  expiresIn,
+  secretKey,
+} = configuration.jwtOptions;
 
 /**
  *
@@ -27,7 +33,7 @@ async function getAccessToken(userId) {
     );
   }
 
-  let accessToken = await createJWT({ user_id: userId }, "MySecretKey", {
+  let accessToken = await createJWT({ user_id: userId }, secretKey, {
     header: {
       typ: "access",
     },
@@ -54,7 +60,7 @@ async function verifyAccessToken(accessToken) {
 
   let userId;
   try {
-    let payload = await verifyJWT(accessToken, "MySecretKey", {
+    let payload = await verifyJWT(accessToken, secretKey, {
       algorithm: algorithm,
     });
 
